@@ -31,6 +31,8 @@ const createNewWorkout = (req, res) => {
     trainerTips: body.trainerTips
   };
 
+  //console.log("newWorkout", newWorkout);
+
   const createdWorkout = workoutService.createNewWorkout(newWorkout);
   res.status(201).send({ status: "OK", data: createdWorkout});
 };

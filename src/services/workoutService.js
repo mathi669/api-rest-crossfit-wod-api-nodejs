@@ -15,7 +15,7 @@ const {v4: uuid} = require('uuid')
       createdAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
       updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
     }
-
+    
     const createdWorkout = Workout.createNewWorkout(workoutToInsert);
     return createdWorkout;
  };
