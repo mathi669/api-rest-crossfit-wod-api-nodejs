@@ -6,8 +6,18 @@ const getAllWorkouts = (req, res) => {
 };
 
 const getOneWorkout = (req, res) => {
-  const workout = workoutService.getOneWorkout(req.params.workoutId);
-  res.send(`Get workout ${req.params.workoutId}`);
+  const {
+    params: { workoutId },
+  } = req;
+
+  if (!workoutId) {
+    return;
+  }
+
+  const workout = workoutService.getOneWorkout(workoutId);
+  res.send({ status: "OK", data: workout });
+  // const workout = workoutService.getOneWorkout(req.params.workoutId);
+  // res.send(`Get workout ${req.params.workoutId}`);
 };
 
 const createNewWorkout = (req, res) => {
@@ -21,30 +31,48 @@ const createNewWorkout = (req, res) => {
     !body.trainerTips
   ) {
     return;
-  };
+  }
 
   const newWorkout = {
     name: body.name,
     mode: body.mode,
     equipment: body.equipment,
     exercises: body.exercises,
-    trainerTips: body.trainerTips
+    trainerTips: body.trainerTips,
   };
 
   //console.log("newWorkout", newWorkout);
 
   const createdWorkout = workoutService.createNewWorkout(newWorkout);
-  res.status(201).send({ status: "OK", data: createdWorkout});
+  res.status(201).send({ status: "OK", data: createdWorkout });
 };
 
 const updateOneWorkout = (req, res) => {
-  const updatedWorkout = workoutService.updateOneWorkout(req.params.workoutId);
-  res.send(`Update workout ${req.params.workoutId}`);
+  const {
+    body,
+    params: { workoutId },
+  } = req;
+
+  if(!workoutId){
+    return;
+  }
+
+  const updatedWorkout = workoutService.updateOneWorkout(workoutId, body);
+  res.send({ status: "OK", data: updatedWorkout });
 };
 
 const deleteOneWorkout = (req, res) => {
-  workoutService.deleteOneWorkout(req.params.workoutId);
-  res.send(`Delete workout ${req.params.workoutId}`);
+
+  const {
+    params: { workoutId },
+  } = req;
+
+  if(!workoutId){
+    return;
+  }
+
+  workoutService.deleteOneWorkout(workoutId);
+  res.status(204).send({ status: "OK" });
 };
 
 module.exports = {
